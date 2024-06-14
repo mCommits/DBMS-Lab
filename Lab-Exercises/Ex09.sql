@@ -58,4 +58,96 @@ SELECT customer_id, MAX(purch_amt) AS Maximum_Purchase_Amount from orders WHERE 
 SELECT COUNT(*) AS Orders_On_170812 from orders
 WHERE ord_date = TO_DATE('2012-08-17', 'YYYY-MM-DD');
 
--- 13. 
+-- Creating table
+CREATE TABLE customer (
+    customer_id   INT,
+    cust_name     VARCHAR(50),
+    city          VARCHAR(50),
+    grade         INT,
+    salesman_id   INT
+);
+
+-- Insert data into customer table
+INSERT INTO customer VALUES (3002, 'Nick Rimando', 'New York', 100, 5001);
+INSERT INTO customer VALUES (3007, 'Brad Davis', 'New York', 200, 5001);
+INSERT INTO customer VALUES (3005, 'Graham Zusi', 'California', 200, 5002);
+INSERT INTO customer VALUES (3008, 'Julian Green', 'London', 300, 5002);
+INSERT INTO customer VALUES (3004, 'Fabian Johnson', 'Paris', 300, 5006);
+INSERT INTO customer VALUES (3009, 'Geoff Cameron', 'Berlin', 100, 5003);
+INSERT INTO customer VALUES (3003, 'Jozy Altidor', 'Moscow', 200, 5007);
+INSERT INTO customer VALUES (3001, 'Brad Guzan', 'London', NULL, 5005);
+
+-- Q13: Write a SQL query to count the number of customers.
+SELECT COUNT(*) FROM customer;
+
+-- Q14: Write a SQL query to find the number of customers who got at least a gradation for his/her activity.
+SELECT COUNT(*) FROM customer WHERE grade IS NOT NULL;
+
+-- Q15: Write a SQL query to find the highest grade of the customers for each of the city. Return city, maximum grade.
+SELECT city, MAX(grade) AS max_grade FROM customer GROUP BY city;
+
+-- Creating table
+CREATE TABLE salesman (
+    salesman_id  INT,
+    name         VARCHAR(50),
+    city         VARCHAR(50),
+    commission   DECIMAL(5, 2)
+);
+
+-- Insert data into salesman table
+INSERT INTO salesman VALUES (5001, 'James Hoog', 'New York', 0.15);
+INSERT INTO salesman VALUES (5002, 'Nail Knite', 'Paris', 0.13);
+INSERT INTO salesman VALUES (5005, 'Pit Alex', 'London', 0.11);
+INSERT INTO salesman VALUES (5006, 'Mc Lyon', 'Paris', 0.14);
+INSERT INTO salesman VALUES (5007, 'Paul Adam', 'Rome', 0.13);
+INSERT INTO salesman VALUES (5003, 'Lauson Hen', 'San Jose', 0.12);
+
+-- Q16: Write a SQL query to count the number of salespeople who belong to a city. Return number of salespeople.
+SELECT COUNT(*) FROM salesman WHERE city IS NOT NULL;
+
+-- Creating table
+CREATE TABLE item_mast (
+    pro_id    INT,
+    pro_name  VARCHAR(50),
+    pro_price DECIMAL(10, 2),
+    pro_com   INT
+);
+
+-- Insert data into item_mast table
+INSERT INTO item_mast VALUES (101, 'Mother Board', 320.0, 15);
+INSERT INTO item_mast VALUES (102, 'Key Board', 450, 16);
+INSERT INTO item_mast VALUES (103, 'ZIP drive', 250, 14);
+INSERT INTO item_mast VALUES (104, 'Speaker', 550, 16);
+INSERT INTO item_mast VALUES (105, 'Monitor', 5000, 11);
+INSERT INTO item_mast VALUES (106, 'DVD drive', 900, 12);
+INSERT INTO item_mast VALUES (107, 'CD drive', 800, 12);
+INSERT INTO item_mast VALUES (108, 'Printer', 2600, 13);
+INSERT INTO item_mast VALUES (109, 'Refill cartridge', 350, 13);
+INSERT INTO item_mast VALUES (110, 'Mouse', 250, 12);
+
+-- Q17: Write a SQL query to count the number of products where product price is higher than or equal to 350. 
+-- Return number of products.
+SELECT COUNT(*) FROM item_mast WHERE pro_price >= 350;
+
+-- Consider a table named Employee( Eid, Name, Dept, Salary, DOJ). Solve the following queries
+
+-- Q18: Display the latest date on which an employee had joined.
+SELECT MAX(DOJ) FROM Employee;
+
+-- Q19: Display the 1st date on which an employee had joined.
+SELECT MIN(DOJ) FROM Employee;
+
+-- Q20: List out how many numbers of departments are there.
+SELECT COUNT(DISTINCT Dept) FROM Employee;
+
+-- Q21: Display how many numbers of employees are there in MCA Department.
+SELECT COUNT(*) FROM Employee WHERE Dept = 'MCA';
+
+-- Q22: Display department-wise maximum average salary.
+SELECT Dept, MAX(Salary) FROM Employee GROUP BY Dept;
+
+-- Q23: Display the total number of employees in the organization.
+SELECT COUNT(*) FROM Employee;
+
+-- Q24: Display department-wise the numbers of employees working.
+SELECT Dept, COUNT(*) FROM Employee GROUP BY Dept;
